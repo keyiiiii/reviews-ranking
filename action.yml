@@ -32,6 +32,7 @@ runs:
     - name: Generate reviews ranking
       shell: bash
       id: generate
+      working-directory: ./
       run: |
         echo "Generating reviews ranking..."
         REVIEWS=$(gh api graphql -f query='
