@@ -21,6 +21,12 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Checkout the this project
+      uses: actions/checkout@v4
+      with:
+        repository: 'keyiiiii/reviews-ranking'
+        path: './reviews-ranking'
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -29,7 +35,7 @@ runs:
     - name: Generate reviews ranking
       shell: bash
       id: generate
-      working-directory: ./
+      working-directory: ./reviews-ranking
       run: |
         echo "Generating reviews ranking..."
         REVIEWS=$(gh api graphql -f query='
