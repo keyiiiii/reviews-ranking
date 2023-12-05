@@ -36,7 +36,7 @@ runs:
         echo "Generating reviews ranking..."
         REVIEWS=$(gh api graphql -f query='
           query {
-            repository(owner: ${{ inputs.repository-owner }}, name: ${{ inputs.repository-name }}) {
+            repository(owner: "${{ inputs.repository-owner }}", name: "${{ inputs.repository-name }}") {
               pullRequests(last: 100, states: MERGED) {
                 nodes {
                   mergedAt
