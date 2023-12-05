@@ -1,0 +1,68 @@
+name: Reviews Ranking
+description: Generate reviews ranking and send to Webhook.
+author: keyiiiii
+icon: bar-chart-2
+color: blue
+inputs:
+  github-token:
+    description: GitHub token
+    default: ${{ github.token }}
+    required: false
+  slack-webhook-url:
+    description: Slack webhook URL
+    required: true
+  repository-owner:
+    description: Repository owner
+    required: true
+  repository-name:
+    description: Repository name
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Generate reviews ranking
+      id: generate
+      run: |
+        echo "Generating reviews ranking..."
+        REVIEWS=$(gh api graphql -f query='
+          query {
+            repository(owner: ${{ inputs.repository-owner }}, name: ${{ inputs.repository-name }}) {
+              pullRequests(last: 100, states: MERGED) {
+                nodes {
+                  mergedAt
+                  reviews(first: 100) {
+                    nodes {
+                      author {
+                        login
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ')
+        RANKING=$(node ./generateRanking/index.js "$REVIEWS")
+        echo "RANKING=${RANKING}" >> $GITHUB_OUTPUT
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+
+    - name: Send reviews ranking to Slack
+      if: ${{ steps.generate.outputs.ranking != '' }}
+      run: |
+        echo ${{ steps.generate.outputs.ranking }}
+        # Create JSON for sending to Slack
+        payload="{\"reviewRanking\": \"${{ steps.generate.outputs.ranking }}\", \"repository\": \"${{ inputs.repository-name }}\"}"
+        # Send the results to Slack
+        curl -X POST -H "Content-type: application/json" \
+             --data "$payload" \
+              ${{ inputs.slack-webhook-url }}
