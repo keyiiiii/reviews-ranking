@@ -30,6 +30,7 @@ runs:
         node-version: '20'
 
     - name: Generate reviews ranking
+      shell: bash
       id: generate
       run: |
         echo "Generating reviews ranking..."
@@ -58,6 +59,7 @@ runs:
 
     - name: Send reviews ranking to Slack
       if: ${{ steps.generate.outputs.ranking != '' }}
+      shell: bash
       run: |
         echo ${{ steps.generate.outputs.ranking }}
         # Create JSON for sending to Slack
