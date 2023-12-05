@@ -1,0 +1,30 @@
+{
+  "name": "reviews-ranking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generateRanking/index.js",
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keyiiiii/reviews-ranking.git"
+  },
+  "keywords": [
+    "reviews",
+    "ranking",
+    "github-actions"
+  ],
+  "author": "keyiiiii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keyiiiii/reviews-ranking/issues"
+  },
+  "homepage": "https://github.com/keyiiiii/reviews-ranking#readme",
+  "devDependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/preset-env": "^7.23.5",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  }
+}
