@@ -52,7 +52,7 @@ runs:
             }
           }
         ')
-        RANKING=$(node ./generateRanking/index.js "$REVIEWS")
+        RANKING=$(node generateRanking/index.js "$REVIEWS")
         echo "RANKING=${RANKING}" >> $GITHUB_OUTPUT
       env:
         GH_TOKEN: ${{ inputs.github-token }}
