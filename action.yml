@@ -1,8 +1,9 @@
 name: Reviews Ranking
 description: Generate reviews ranking and send to Webhook.
 author: keyiiiii
-icon: bar-chart-2
-color: blue
+branding:
+  icon: bar-chart-2
+  color: blue
 inputs:
   github-token:
     description: GitHub token
