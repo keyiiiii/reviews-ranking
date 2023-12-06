@@ -21,7 +21,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout the this project
+    - name: Checkout this project
       uses: actions/checkout@v4
       with:
         repository: 'keyiiiii/reviews-ranking'
